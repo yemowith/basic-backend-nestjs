@@ -19,7 +19,6 @@ const configuration_1 = __importDefault(require("./config/configuration"));
 const prisma_module_1 = require("./clients/prisma/prisma.module");
 const api_module_1 = require("./api/api.module");
 const jwt_1 = require("@nestjs/jwt");
-const cache_module_1 = require("./clients/cache/cache.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -29,7 +28,6 @@ exports.AppModule = AppModule = __decorate([
             config_1.ConfigModule.forRoot({ isGlobal: true, load: [configuration_1.default] }),
             event_emitter_1.EventEmitterModule.forRoot(),
             prisma_module_1.PrismaModule,
-            cache_module_1.CacheModule,
             jwt_1.JwtModule.register({
                 global: true,
                 secret: process.env.JWT_SECRET,

@@ -15,7 +15,7 @@ import { CacheModule } from './clients/cache/cache.module';
     ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
     EventEmitterModule.forRoot(),
     PrismaModule,
-    CacheModule,
+    //CacheModule,
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
