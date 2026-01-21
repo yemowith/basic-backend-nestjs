@@ -23,14 +23,29 @@ RUN npm install
 # Copy the rest of the app
 COPY . .
 
-# Generate Prisma client
-RUN npx prisma generate
+# Generate Prisma client (DATABASE_URL not needed for generate, but prisma.config.ts requires it)
+# Using a dummy URL for build time
+RUN  npx prisma generate
 
 # Build the app
 RUN npm run build
 
-# Expose app port
-EXPOSE 2025
+# Debug: Check what was built
+RUN echo "=== Checking dist structure ===" && \
+    if [ -d dist ]; then \
+      echo "dist exists" && \
+      find dist -name "main*" -type f && \
+      echo "=== All files in dist ===" && \
+      find dist -type f | head -10; \
+    else \
+      echo "ERROR: dist not found!" && exit 1; \
+    fi
+
+# Define build argument for port
+ARG PORT=3000
+
+# Expose app port (uses PORT from environment or defaults to 3000)
+EXPOSE ${PORT}
 
 # Run app
-CMD ["node", "dist/main"]
+CMD ["npm", "run", "start:prod"]
