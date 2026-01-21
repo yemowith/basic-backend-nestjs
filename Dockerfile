@@ -30,17 +30,6 @@ RUN  npx prisma generate
 # Build the app
 RUN npm run build
 
-# Debug: Check what was built
-RUN echo "=== Checking dist structure ===" && \
-    if [ -d dist ]; then \
-      echo "dist exists" && \
-      find dist -name "main*" -type f && \
-      echo "=== All files in dist ===" && \
-      find dist -type f | head -10; \
-    else \
-      echo "ERROR: dist not found!" && exit 1; \
-    fi
-
 # Define build argument for port
 ARG PORT=3000
 
@@ -48,4 +37,4 @@ ARG PORT=3000
 EXPOSE ${PORT}
 
 # Run app
-CMD ["npm", "run", "start:prod"]
+CMD ["node", "dist/src/main"]
